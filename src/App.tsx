@@ -65,14 +65,14 @@ function UserIcon() {
 
 const materials = [
   {
-    title: 'Scenariusz lekcji z grą edukacyjną',
-    href: `${BASE}scenariusz.pdf`,
-    Icon: DiceIcon,
+    title: 'Materiały edukacyjne',
+    href: `${BASE}material.pdf`,
+    Icon: BookIcon,
   },
   {
-    title: 'Materiały edukacyjne',
-    href: `${BASE}materialy-edukacyjne.pdf`,
-    Icon: BookIcon,
+    title: 'Scenariusz lekcji z grą edukacyjną',
+    href: `${BASE}scenariusz-lekcji.pdf`,
+    Icon: DiceIcon,
   },
 ]
 
