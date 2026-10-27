@@ -1,11 +1,12 @@
-const YOUTUBE_ID = 'dQw4w9WgXcQ' // TODO: podmień na ID swojego filmu
+import Hero from './Hero.tsx'
+
 const BASE = import.meta.env.BASE_URL
 const YEAR = new Date().getFullYear()
 
 const links = [
   { href: '#o-mnie', label: 'O mnie' },
-  { href: '#wideo', label: 'Wideo' },
   { href: '#materialy', label: 'Materiały' },
+  { href: '#cv', label: 'CV' },
 ]
 
 const iconProps = {
@@ -30,16 +31,6 @@ function DownloadIcon() {
   )
 }
 
-function DocumentIcon() {
-  return (
-    <svg {...iconProps}>
-      <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" />
-      <path d="M14 3v5h5" />
-      <path d="M9 13h6M9 17h6" />
-    </svg>
-  )
-}
-
 function DiceIcon() {
   return (
     <svg {...iconProps}>
@@ -52,6 +43,40 @@ function DiceIcon() {
     </svg>
   )
 }
+
+function BookIcon() {
+  return (
+    <svg {...iconProps}>
+      <path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z" />
+      <path d="M4 21a2 2 0 0 1 2-2h13" />
+      <path d="M9 7h6" />
+    </svg>
+  )
+}
+
+function UserIcon() {
+  return (
+    <svg {...iconProps}>
+      <circle cx="12" cy="8" r="4" />
+      <path d="M4 21a8 8 0 0 1 16 0" />
+    </svg>
+  )
+}
+
+const materials = [
+  {
+    title: 'Scenariusz lekcji z grą edukacyjną',
+    href: `${BASE}scenariusz.pdf`,
+    Icon: DiceIcon,
+  },
+  {
+    title: 'Materiały edukacyjne',
+    href: `${BASE}materialy-edukacyjne.pdf`,
+    Icon: BookIcon,
+  },
+]
+
+const CV_HREF = `${BASE}cv-katarzyna-piechowicz.pdf`
 
 function App() {
   return (
@@ -77,69 +102,49 @@ function App() {
       </header>
 
       <main>
-        <section id="o-mnie" className="scroll-mt-16 bg-white">
-          <div className="mx-auto max-w-5xl px-4 py-20 text-center sm:px-6 sm:py-28">
-            <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-indigo-600">
-              Historynka
-            </p>
-            <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
-              Portfolio - Redaktor Merytoryczny
-            </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">
-              Tworzę i weryfikuję treści edukacyjne – od scenariuszy filmowych po gry
-              planszowe. Dbam o rzetelność merytoryczną, czytelny język i atrakcyjną formę
-              przekazu.
-            </p>
-            <a
-              href="#materialy"
-              className="mt-10 inline-block rounded-lg bg-indigo-600 px-6 py-3 font-semibold text-white shadow transition hover:bg-indigo-700"
-            >
-              Zobacz materiały
-            </a>
-          </div>
-        </section>
+        <Hero />
 
-        <section id="wideo" className="scroll-mt-16">
-          <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6 sm:py-20">
-            <h2 className="mb-8 text-center text-3xl font-bold text-slate-900">Wideo</h2>
-            <div className="aspect-video w-full overflow-hidden rounded-xl bg-black shadow-lg">
-              <iframe
-                className="h-full w-full"
-                src={`https://www.youtube.com/embed/${YOUTUBE_ID}`}
-                title="Film z YouTube"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="strict-origin-when-cross-origin"
-              />
-            </div>
-          </div>
-        </section>
-
-        <section id="materialy" className="scroll-mt-16 bg-white">
-          <div className="mx-auto max-w-4xl px-4 py-16 text-center sm:px-6 sm:py-20">
+        <section id="materialy" className="scroll-mt-16">
+          <div className="mx-auto max-w-5xl px-4 py-16 text-center sm:px-6 sm:py-20">
             <h2 className="mb-4 text-3xl font-bold text-slate-900">Materiały</h2>
-            <p className="mb-10 text-slate-600">Pobierz przykładowe materiały mojego autorstwa.</p>
-            <div className="flex flex-col items-stretch justify-center gap-4 sm:flex-row">
-              <a
-                href={`${BASE}scenariusz.pdf`}
-                download
-                className="inline-flex items-center justify-center gap-3 rounded-lg bg-indigo-600 px-6 py-4 font-semibold text-white shadow transition hover:bg-indigo-700"
-              >
-                <DocumentIcon />
-                Pobierz scenariusz (PDF)
-                <DownloadIcon />
-              </a>
-              <a
-                href={`${BASE}gra-planszowa.pdf`}
-                download
-                className="inline-flex items-center justify-center gap-3 rounded-lg border-2 border-indigo-600 px-6 py-4 font-semibold text-indigo-600 transition hover:bg-indigo-50"
-              >
-                <DiceIcon />
-                Pobierz grę planszową
-                <DownloadIcon />
-              </a>
+            <p className="mb-10 text-slate-600">Przykładowe materiały mojego autorstwa.</p>
+            <div className="grid gap-8 md:grid-cols-2">
+              {materials.map(({ title, href, Icon }) => (
+                <a
+                  key={title}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex min-h-72 flex-col items-center justify-center gap-6 rounded-2xl border border-slate-200 bg-white p-10 shadow-sm transition hover:-translate-y-1 hover:border-indigo-300 hover:shadow-lg"
+                >
+                  <span className="flex h-20 w-20 items-center justify-center rounded-full [&>svg]:h-10 [&>svg]:w-10 bg-indigo-100 text-indigo-600 transition group-hover:bg-indigo-600 group-hover:text-white">
+                    <Icon />
+                  </span>
+                  <span className="text-2xl font-semibold text-slate-900">{title}</span>
+                  <span className="mt-auto inline-flex items-center gap-2 font-medium text-indigo-600">
+                    Otwórz
+                    <DownloadIcon />
+                  </span>
+                </a>
+              ))}
             </div>
+          </div>
+        </section>
+
+        <section id="cv" className="scroll-mt-16 bg-white">
+          <div className="mx-auto max-w-3xl px-4 py-16 text-center sm:px-6 sm:py-20">
+            <h2 className="mb-4 text-3xl font-bold text-slate-900">CV</h2>
+            <p className="mb-8 text-slate-600">Pełne doświadczenie zawodowe i wykształcenie.</p>
+            <a
+              href={CV_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-3 rounded-lg bg-indigo-600 px-6 py-4 font-semibold text-white shadow transition hover:bg-indigo-700"
+            >
+              <UserIcon />
+              Pobierz CV (PDF)
+              <DownloadIcon />
+            </a>
           </div>
         </section>
       </main>
